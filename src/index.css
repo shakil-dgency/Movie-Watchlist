@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: linear-gradient(
+      -130deg,
+      #00347F 0%,
+      #111111 20%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+.border-animate {
+    position: relative;
+  }
+  
+  .border-animate::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background: #00357f;
+    width: 0%;
+    animation: borderExpand 1.5s ease-out forwards;
+  }
+  
+  @keyframes borderExpand {
+    to {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
