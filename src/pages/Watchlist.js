@@ -19,7 +19,7 @@ const Watchlist = () => {
   const [loading, setLoading] = useState(true);
 
   // fetch movies from firebase
-  const fetchWatchlist = useCallback( async () => {
+  const fetchWatchlist = async () => {
     const start = Date.now();
     if (!user) return;
     setLoading(true);
@@ -45,19 +45,19 @@ const Watchlist = () => {
     setLoading(false);
     const end = Date.now();
     console.log(`Watchlist loaded in ${end - start}ms`);
-  });
+  };
 
   //delete from firebase
 
   const removeFromWatchlist = async (movieDocId) => {
-    
-    const updatedList = watchlist.filter((movie)=> movie.id !== movieDocId)
+
+    const updatedList = watchlist.filter((movie) => movie.id !== movieDocId)
     setWatchlist(updatedList)
-    
-    
+
+
     await deleteDoc(doc(db, "watchlists", movieDocId));
-    
-    
+
+
   };
 
   useEffect(() => {
@@ -86,12 +86,15 @@ const Watchlist = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
           {watchlist.map((movie) => (
-            <div key={movie.id} className="bg-gray-800 rounded shadow hover:shadow-lg">
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
-                alt={movie.title}
-                className="rounded-t h-[350px] w-full object-cover"
-              />
+            <div key={movie.id} className="bg-gray-800 rounded shadow hover:shadow-lg ">
+              <div className="overflow-hidden ">
+
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
+                  alt={movie.title}
+                  className="rounded-t h-[350px] w-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </div>
               <div className="p-3">
                 <h2 className="text-lg font-semibold">{movie.title}</h2>
                 <p className="text-sm text-gray-400">Year: {movie.year}</p>
