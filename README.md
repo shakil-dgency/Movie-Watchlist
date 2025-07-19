@@ -35,6 +35,8 @@ A sleek, responsive React app to **search, view, and save movies to your persona
 git clone https://github.com/shakil-dgency/Movie-Watchlist.git
 cd movie-watchlist
 
+```
+
 
 ### Install dependencies and Run the project
 
