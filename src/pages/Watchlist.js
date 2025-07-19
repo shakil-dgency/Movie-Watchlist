@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../services/firebase";
 import Loader from "../components/animation/Loader";
@@ -19,7 +19,7 @@ const Watchlist = () => {
   const [loading, setLoading] = useState(true);
 
   // fetch movies from firebase
-  const fetchWatchlist = async () => {
+  const fetchWatchlist = useCallback( async () => {
     const start = Date.now();
     if (!user) return;
     setLoading(true);
@@ -45,13 +45,19 @@ const Watchlist = () => {
     setLoading(false);
     const end = Date.now();
     console.log(`Watchlist loaded in ${end - start}ms`);
-  };
+  });
 
   //delete from firebase
 
   const removeFromWatchlist = async (movieDocId) => {
+    
+    const updatedList = watchlist.filter((movie)=> movie.id !== movieDocId)
+    setWatchlist(updatedList)
+    
+    
     await deleteDoc(doc(db, "watchlists", movieDocId));
-    setWatchlist(prev => prev.filter(movie => movie.id !== movieDocId));
+    
+    
   };
 
   useEffect(() => {
